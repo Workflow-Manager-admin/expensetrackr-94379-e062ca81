@@ -60,7 +60,7 @@ describe('ExpenseTracker.vue - core features', () => {
   beforeEach(() => {
     // Mock localStorage for each test
     localStorageBackup = window.localStorage
-    window.localStorage = new LocalStorageMock() as any
+    window.localStorage = new LocalStorageMock() as unknown as Storage
   })
 
   afterEach(() => {
@@ -164,7 +164,7 @@ describe('ExpensePieChart.vue - integration & rendering', () => {
 
   beforeEach(() => {
     localStorageBackup = window.localStorage
-    window.localStorage = new LocalStorageMock() as any
+    window.localStorage = new LocalStorageMock() as unknown as Storage
   })
 
   afterEach(() => {
@@ -213,7 +213,7 @@ describe('Integration: ExpenseTracker & ExpensePieChart', () => {
   let localStorageBackup: typeof window.localStorage
   beforeEach(() => {
     localStorageBackup = window.localStorage
-    window.localStorage = new LocalStorageMock() as any
+    window.localStorage = new LocalStorageMock() as unknown as Storage
     window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify([]))
     tracker = mount(ExpenseTracker)
     pie = mount(ExpensePieChart)

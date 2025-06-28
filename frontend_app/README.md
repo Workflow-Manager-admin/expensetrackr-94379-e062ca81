@@ -38,6 +38,22 @@ npm run build
 npm run test:unit
 ```
 
+---
+
+## 🧪 Test Environment Configuration (Vitest + Vuetify + Chart.js)
+
+**Global Test Setup:**
+- The file `setupTests.ts` is configured as the Vitest `setupFiles` entry point. This sets up for all tests:
+  - Vuetify is registered globally using @vue/test-utils, so all components rendered by the test runner have Vuetify context and features.
+  - The `canvas` npm library is installed as a devDependency and patched into the JSDOM-derived window object, allowing Chart.js (and other canvas libraries) to function in headless environments.
+  - `HTMLCanvasElement.prototype.getContext`, `toDataURL`, etc., are polyfilled either with real implementations (using node-canvas) or with minimal mocks to allow Chart.js to operate in test mode without crashing.
+  - Browser APIs like `window.matchMedia` are polyfilled, as Vuetify checks these for rendering breakpoints in components.
+
+**Updating or Debugging:**
+- See comments in `setupTests.ts` for instructions on extending the polyfills or mocks.
+- If tests using Chart.js fail because of missing canvas methods, check node-canvas is installed and working, or extend the NOOP mocks.
+- This setup ensures that UI tests involving Vuetify and chart components (like ExpensePieChart.vue) are reliable in JSDOM/Vitest (Node) environments.
+
 ### Lint with [ESLint](https://eslint.org/)
 
 ```sh
